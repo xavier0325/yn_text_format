@@ -46,8 +46,7 @@ function strInArray(str: string, arr: string[]) {
 }
 
 function strToArray(str: string) {
-  var arr = new Array();
-  return (arr = str.split("-"));
+  return str.split("-");
 }
 
 function ArrInArr(subArr: any[], Arr: any[]) {
