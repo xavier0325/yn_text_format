@@ -4,7 +4,6 @@
       <div class="area" ref="area1Ref">
         <span>原文</span>
         <el-input
-          style="width: 500px"
           v-model="inputVal"
           :rows="10"
           size="large"
@@ -42,20 +41,19 @@
           <span style="text-align: center"
             >功能区<el-icon><Guide /></el-icon
           ></span>
-          <el-row>
-            <el-col :span="3" style="text-align: left"> 氨基酸： </el-col>
-            <el-col :span="21" style="text-align: left">
+          <div class="row">
+            <div class="label" style="text-align: left"> 氨基酸： </div>
+            <div class="value" style="text-align: left">
               <el-button type="success" round @click="tranformText"
                 >三个字母转一个字母</el-button
               >
-            </el-col>
-          </el-row>
+            </div>
+          </div>
         </div>
       </div>
       <div class="area" ref="area2Ref">
         <span>格式化文本</span>
         <el-input
-          style="width: 500px"
           v-model="formatVal"
           :rows="10"
           size="large"
@@ -69,7 +67,6 @@
     <section style="flex-direction: column" ref="area3Ref">
       <span>功能操作结果</span>
       <el-input
-        style="width: 500px"
         v-model="resVal"
         :rows="10"
         size="large"
@@ -164,13 +161,17 @@ type ElCenter = {
   x: number;
   y: number;
 };
-const renderArrow = (cvs: HTMLCanvasElement, sourceCenter: ElCenter, targetCenter: ElCenter,  curveUp = true) => {
+const renderArrow = (
+  cvs: HTMLCanvasElement,
+  sourceCenter: ElCenter,
+  targetCenter: ElCenter,
+  curveUp = true
+) => {
   const ctx = cvs.getContext("2d") as CanvasRenderingContext2D;
 
-
   let controlX = (sourceCenter.x + targetCenter.x) / 2;
-  if (!curveUp){
-    controlX = controlX +  + 400;
+  if (!curveUp) {
+    controlX = controlX + +400;
   }
   const controlY = curveUp ? sourceCenter.y - 400 : sourceCenter.y + 600;
   // ctx.clearRect(0, 0, cvs.width, cvs.height);
@@ -185,23 +186,23 @@ const renderArrow = (cvs: HTMLCanvasElement, sourceCenter: ElCenter, targetCente
 function startDraw(cvs: HTMLCanvasElement) {
   const sourceCenter1 = {
     x: area1Ref.value.offsetLeft + area1Ref.value.offsetWidth,
-    y: area1Ref.value.offsetTop + area1Ref.value.offsetHeight / 2
+    y: area1Ref.value.offsetTop + area1Ref.value.offsetHeight / 2,
   };
   const targetCenter1 = {
     x: area2Ref.value.offsetLeft,
-    y: area2Ref.value.offsetTop + area2Ref.value.offsetHeight / 2
+    y: area2Ref.value.offsetTop + area2Ref.value.offsetHeight / 2,
   };
-  renderArrow(cvs, sourceCenter1 ,targetCenter1);
+  renderArrow(cvs, sourceCenter1, targetCenter1);
   const sourceCenter2 = {
     x: area2Ref.value.offsetLeft + area2Ref.value.offsetWidth / 2,
-    y: area2Ref.value.offsetTop + area2Ref.value.offsetHeight / 2
+    y: area2Ref.value.offsetTop + area2Ref.value.offsetHeight / 2,
   };
   const targetCenter2 = {
     x: area3Ref.value.offsetLeft + area3Ref.value.offsetWidth / 2,
-    y: area3Ref.value.offsetTop + area3Ref.value.offsetHeight / 2
+    y: area3Ref.value.offsetTop + area3Ref.value.offsetHeight / 2,
   };
-  renderArrow(cvs, sourceCenter2,targetCenter2, false);
-};
+  renderArrow(cvs, sourceCenter2, targetCenter2, false);
+}
 
 onMounted(() => {
   const cvs = canvasRef.value;
@@ -209,7 +210,6 @@ onMounted(() => {
   cvs.height = window.innerHeight;
   startDraw(cvs);
 });
-
 </script>
 
 <style lang="less" scoped>
@@ -221,6 +221,7 @@ onMounted(() => {
     gap: 16px 16px;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     .area {
       display: flex;
       flex-direction: column;
@@ -238,10 +239,16 @@ onMounted(() => {
         &-item {
           display: flex;
           flex-direction: column;
+          width: 100%;
+          align-items: center;
           > span {
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-bottom: 16px;
+            background-color: #e1e1e1;
+            border-radius: 14px;
           }
           .el-checkbox {
             --el-checkbox-font-size: 18px;
@@ -262,6 +269,24 @@ onMounted(() => {
             flex-wrap: wrap;
           }
         }
+      }
+      .row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .el-textarea {
+      width: 500px;
+      transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+    }
+    @media screen and (max-width: 1800px){
+      .el-textarea {
+        width: 300px;
+      }
+      .area-opts {
+        width: 100%;
+        align-items: center;
       }
     }
   }

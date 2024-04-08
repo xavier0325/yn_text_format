@@ -9,13 +9,8 @@ import Home from "@/views/Home.vue";
 
 <style scoped less>
 .header {
-  position: fixed;
-  left: 50%;
-  top: 100px;
-  transform: translateX(-50%);
   font-size: 40px;
   font-weight: bold;
-  margin-bottom: 10px;
   background-image: url(@/assets/loading.gif);
   background-position: center;
   background-clip: text;
